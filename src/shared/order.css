@@ -1,0 +1,118 @@
+.container-order-all {
+    box-sizing: border-box;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.orders-container {
+    align-items: center;
+    font-family: openSansRegular;
+    display: grid;
+    grid-template-columns: 550px 550px;
+    align-items: self-start;
+    justify-self: anchor-center;
+    gap: 20px;
+}
+
+.items-order {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 10px solid #4CAF50;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+}
+
+.complete {
+    background-color: gray;
+    border: 10px solid #559755;
+}
+
+.btn-complete {
+    background-color: #3a3939;
+    padding: 10px 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    line-height: normal;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.details-container {
+    transition: max-height 0.4s ease-in-out, opacity 0.7s ease-in-out;
+    overflow: hidden;
+}
+
+.item-description {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #4CAF50;
+    gap: 10px;
+}
+
+.info-user {
+    padding: 5px;
+    font-size: 18px;
+}
+
+.collapsed {
+    max-height: 25px;
+    opacity: 0.5;
+}
+
+.collapsedd {
+    max-height: 45px;
+    opacity: 0.5;
+}
+
+.expanded {
+    max-height: 700px;
+    opacity: 1;
+}
+
+.text-order {
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.button-order {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+@media (max-width: 1200px) {
+    .orders-container {
+        min-width: 350px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .items-order {
+        width: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    .items-order {
+        width: 100%;
+    }
+
+    .text-order {
+        font-size: 16px;
+    }
+}

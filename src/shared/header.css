@@ -1,0 +1,123 @@
+/*HEADER*/
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    min-height: 350px;
+    position: relative;
+    background-image: url("../public/images/image-index/eggz1.jpg");
+    background-color: #666;
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 10;
+    color: white;
+}
+
+
+.logo {
+    width: 400px;
+}
+
+.logo-gif {
+    width: 250px;
+    margin-bottom: -20px;
+}
+
+.logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.span2 {
+    grid-column: span 2;
+}
+
+.linked {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+}
+
+.linked:hover {
+    transform: scale(1.1);
+}
+
+.link-avito:before {
+    content: '';
+    display: inline-block;
+    width: 35px;
+    height: 25px;
+    margin-right: 5px;
+    background-image: url("../public/images/svg/avito.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.navigation {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    gap: 15px;
+}
+
+.menu-checkbox {
+    display: none;
+}
+
+.close-button {
+    display: none;
+}
+
+.nav-link {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-sticky {
+    display: none;
+}
+
+.item-list {
+    font-family: opensansBold;
+    font-style: normal;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+
+.link::after {
+    content: "";
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12px;
+    width: 0%;
+    height: 3px;
+    background: #b59f5b;
+    transition: width 1s;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+/*HEADER*/

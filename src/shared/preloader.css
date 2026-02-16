@@ -1,0 +1,33 @@
+.preloader  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.logo-gif-pre {
+    width: 200px;
+}
+
+.animated-progress-bar-container {
+    width: 250px;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.animated-progress-bar {
+    height: 100%;
+    background-color: #4CAF50;
+    width: 0%;
+    animation: loadBar 4.5s forwards;
+    border-radius: inherit;
+}
+
+@keyframes loadBar {
+    from { width: 0%; }
+    to { width: 100%; }
+}

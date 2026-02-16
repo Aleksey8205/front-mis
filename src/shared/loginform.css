@@ -1,0 +1,124 @@
+.login-form {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  margin: 0 auto;
+  font-family: opensansRegular;
+}
+
+.title {
+  color: #3C4A5E;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.label {
+  font-size: 14px;
+  color: #6D7885;
+  margin-bottom: 5px;
+}
+
+.input-field {
+  padding: 10px;
+  border: 1px solid #DCDCDC;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.btn-yandex-signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(41, 41, 51, 1);
+  color: #FFFFFF;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-yandex-signin:hover {
+  background-color: rgba(27, 27, 38, 1);
+}
+
+.btn-yandex-signin:active {
+  background-color: rgba(10, 10, 25, 1);
+}
+
+.btn-yandex-signin::before {
+  content: '';
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Yandex_icon.svg/2048px-Yandex_icon.svg.png');
+  /* Логотип Яндекса */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-login-content {
+
+  border-radius: 32px;
+  justify-items: center;
+}
+
+.caption-modal {
+  font-size: 36px;
+  text-align: center;
+}
+
+.button-close {
+
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+  left: 345px;
+  background-color: #FFFFFF;
+  border-radius: 17px;
+  padding: 2px;
+}
+
+.x-icon {
+  width: 30px;
+  height: 30px;
+}

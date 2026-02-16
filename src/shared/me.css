@@ -1,0 +1,190 @@
+.me {
+    font-family: opensansRegular;
+    justify-items: center;
+}
+
+.formOrder {
+    justify-items: center;
+    background-color: #dddddd;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.container-order {
+    display: flex;
+    gap: 20px;
+    height: 70px;
+}
+
+.btn-add {
+    width: 250px;
+    align-self: flex-end;
+}
+
+.form-margin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+select {
+    appearance: none;
+
+    @supports (appearance: base-select) {
+
+        &,
+        &::picker(select) {
+            appearance: base-select;
+        }
+    }
+}
+
+select {
+    width: 200px;
+    align-items: center;
+    color: black;
+    padding-block: 10px;
+    padding-inline: 10px 30px;
+    border-radius: 5px;
+    border: 2px solid #4CAF50;
+    cursor: pointer;
+    font-weight: 700;
+    background: #99c49a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23FFF' class='size-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E%0A") right 10px center / 20px no-repeat;
+
+    @supports (appearance: base-select) {
+        padding-inline: 10px;
+        background-image: none;
+
+        &::picker-icon {
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23FFF' class='size-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E%0A");
+            transition: rotate 0.2s ease-out;
+        }
+
+        &:open::picker-icon {
+            rotate: 180deg;
+        }
+
+        &::picker(select) {
+            padding: 0;
+            margin-top: 5px;
+            border: 2px solid rgb(248, 248, 248);
+            background: #fdfdfd;
+            border-radius: 5px;
+            font-weight: 400;
+
+            opacity: 0;
+            height: 0;
+            overflow: clip;
+            transition: height 1s ease-out, opacity 0.8s ease-out, overlay 0.5s,
+                display 0.5s;
+
+            transition-behavior: allow-discrete;
+        }
+
+        &:open::picker(select) {
+            opacity: 1;
+            height: calc-size(auto, size);
+            overflow-y: hidden;
+
+            @starting-style {
+                opacity: 0;
+                height: 0;
+            }
+        }
+
+        option {
+            justify-content: center;
+            padding: 10px;
+            border-top: 1px solid #4CAF50;
+            ;
+            cursor: pointer;
+            transition-property: color, background;
+            transition-duration: 0.2s;
+            transition-timing-function: ease-out;
+
+            &:where(:hover, :focus, :active) {
+                background: white;
+                color: rgb(0, 0, 0);
+            }
+
+            &:checked {
+                background: #4CAF50;
+                color: white;
+            }
+
+            &::checkmark {
+                display: none;
+            }
+
+            &:first-child {
+                border: 0;
+            }
+        }
+    }
+}
+
+.order-container {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 25px;
+}
+
+.input-order {
+    padding: 10px;
+    font-size: 20px;
+    background-color: #ffffff;
+    color: #30529f;
+    border: none;
+    border-radius: 10px;
+}
+
+.input-order:focus {
+    outline: 2px solid #4CAF50;
+}
+
+
+@media (max-width: 1200px) {
+    select {
+        height: 70px;
+    }
+
+    .container-order {
+        height: auto;
+    }
+}
+
+@media (max-width: 1080px) {
+    .container-order {
+        display: block;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .input-order {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .btn-add {
+        width: 100%;
+        align-self: center;
+    }
+
+    .order-container {
+        display: block;
+    }
+
+    .formOrder {
+        width: 90%;
+    }
+
+    .form {
+        width: 100%;
+    }
+}
