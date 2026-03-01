@@ -121,3 +121,8 @@
 }
 
 /*HEADER*/
+
+.developer {
+    justify-self: flex-end;
+    margin-right: 20px;
+}

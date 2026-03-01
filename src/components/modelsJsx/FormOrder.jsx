@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import production from "../../javaScript/order.js";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const FormOrder = ({ onOrderCreated }) => {
   const authState = useSelector((state) => state.auth);
@@ -20,6 +20,7 @@ const FormOrder = ({ onOrderCreated }) => {
   const [eggs, setEggs] = useState("");
   const [carcassWeight, setCarcassWeight] = useState("");
   const [broilerDay, setBroilerDay] = useState("");
+  const [textarea, setTextarea] = useState("")
 
   const handleAnimalChange = (index, selectedAnimal) => {
     const newForms = forms.map((form, i) => {
@@ -64,16 +65,16 @@ const FormOrder = ({ onOrderCreated }) => {
   };
 
   const handleAddress = (enterAddr) => {
-    setDopAddress(enterAddr)
-  }
+    setDopAddress(enterAddr);
+  };
 
   const handleName = (enterName) => {
-    setDopName(enterName)
-  }
+    setDopName(enterName);
+  };
 
   const handlePhone = (enterPhone) => {
-    setDopPhone(enterPhone)
-  }
+    setDopPhone(enterPhone);
+  };
 
   const addNewRow = () => {
     setForms([...forms, { animalType: "", feedType: "", amount: "" }]);
@@ -86,6 +87,7 @@ const FormOrder = ({ onOrderCreated }) => {
       title: `${item.animalType} "${item.feedType}"`,
       quantity: parseFloat(item.amount),
       unit: "меш.",
+      text: ""
     }));
 
   if (broilerDay) {
@@ -115,12 +117,16 @@ const FormOrder = ({ onOrderCreated }) => {
     });
   }
 
+
   const finalPayload = {
     dopAddress: dopAddress,
     dopName: dopName,
     dopPhone: dopPhone,
     items: collectedData,
+    text: textarea,
   };
+  
+  console.log(finalPayload)
 
   const orderSubmit = (event) => {
     event.preventDefault();
@@ -149,161 +155,158 @@ const FormOrder = ({ onOrderCreated }) => {
 
   return (
     <>
-    <div className="formOrder">
-    {authState && authState.user?.isAdmin && (
-       <div className="order-container">
-       <div>
-         <p className="text">Адрес(если требуется)</p>
-         <input
-           className="input-order"
-           type="text"
-           value={dopAddress}
-           onChange={(e) => handleAddress(e.target.value)}
-           placeholder="Город Улица Дом"
-         />
-       </div>
-       <div>
-         <p className="text">Имя</p>
-         <input
-           className="input-order"
-           type="text"
-           value={dopName}
-           onChange={(e) =>
-             handleName(e.target.value)
-           }
-           placeholder="Например Иванов Иван"
-         />
-       </div>
-       <div>
-         <p className="text">Контактный телефон</p>
-         <input
-           className="input-order"
-           type="text"
-           value={dopPhone}
-           onChange={(e) =>
-             handlePhone(e.target.value)
-           }
-           placeholder="8(999) 999-99-99"
-         />
-       </div>
-     </div>
-    )}
-                    <h2 className="caption-benefist">Форма для заказа</h2>
-                    {showForm && (
-                      <form className="form" onSubmit={orderSubmit}>
-                        <div className="form-margin">
-                          {forms.map((form, index) => (
-                            <div key={index} className="container-order">
-                              <p className="text">{index + 1} Выбор</p>
-                              <p className="text">Шаг 1</p>
-                              <select
-                                className="select-order"
-                                value={form.animalType}
-                                onChange={(e) =>
-                                  handleAnimalChange(index, e.target.value)
-                                }
-                              >
-                                <option value="">Выберите с\х животное</option>
-                                {animalTypes.map((animal) => (
-                                  <option key={animal} value={animal}>
-                                    {animal}
-                                  </option>
-                                ))}
-                              </select>
-                              <p className="text">Шаг 2</p>
-                              <select
-                                className="select-order"
-                                value={form.feedType}
-                                onChange={(e) =>
-                                  handleFeedChange(index, e.target.value)
-                                }
-                              >
-                                <option value="">Выберите корм</option>
-                                {form.animalType &&
-                                  production[form.animalType].map((feed) => (
-                                    <option key={feed.id} value={feed.feed}>
-                                      {feed.feed}
-                                    </option>
-                                  ))}
-                              </select>
-                              <p className="text">Шаг 3</p>
-                              <input
-                                className="input-order"
-                                type="number"
-                                value={form.amount}
-                                onChange={(e) =>
-                                  handleAmountChange(index, e.target.value)
-                                }
-                                placeholder="Количество мешков."
-                              />
-                            </div>
-                          ))}
-                          <button
-                            type="button"
-                            className="carousel-btn btn-add"
-                            onClick={addNewRow}
-                          >
-                            + Добавить строку
-                          </button>
-                        </div>
-                        <div className="order-container">
-                          <div>
-                            <p className="text">Яйцо-количество в десятках.</p>
-                            <input
-                              className="input-order"
-                              type="number"
-                              value={eggs}
-                              onChange={(e) => handleEggsChange(e.target.value)}
-                              placeholder="Яйца десяток."
-                            />
-                          </div>
-                          <div>
-                            <p className="text">Тушки бройлера шт.</p>
-                            <input
-                              className="input-order"
-                              type="number"
-                              value={carcassWeight}
-                              onChange={(e) =>
-                                handleCarcassWeightChange(e.target.value)
-                              }
-                              placeholder="Введите количество шт."
-                            />
-                          </div>
-                          <div>
-                            <p className="text">Суточные цыплята</p>
-                            <input
-                              className="input-order"
-                              type="number"
-                              value={broilerDay}
-                              onChange={(e) =>
-                                handleBroilerDayChange(e.target.value)
-                              }
-                              placeholder="Введите количество шт."
-                            />
-                          </div>
-                        </div>
-                        <button className="carousel-btn btn-add">
-                          Оформить заказ
-                        </button>
-                      </form>
-                    )}
-                    {!showForm && (
-                      <div className="success-message">
-                        <p className="text">Ваш заказ успешно отправлен!</p>
-                        <button
-                          className="carousel-btn"
-                          onClick={() => {
-                            setShowForm(true);
-                            setOrderCreated(false);
-                          }}
-                        >
-                          Сделать ещё один заказ
-                        </button>
-                      </div>
-                    )}
-                  </div>
+      <div className="formOrder">
+        {authState && authState.user?.isAdmin && (
+          <div className="order-container">
+            <div>
+              <p className="text">Адрес(если требуется)</p>
+              <input
+                className="input-order"
+                type="text"
+                value={dopAddress}
+                onChange={(e) => handleAddress(e.target.value)}
+                placeholder="Город Улица Дом"
+              />
+            </div>
+            <div>
+              <p className="text">Имя</p>
+              <input
+                className="input-order"
+                type="text"
+                value={dopName}
+                onChange={(e) => handleName(e.target.value)}
+                placeholder="Например Иванов Иван"
+              />
+            </div>
+            <div>
+              <p className="text">Контактный телефон</p>
+              <input
+                className="input-order"
+                type="text"
+                value={dopPhone}
+                onChange={(e) => handlePhone(e.target.value)}
+                placeholder="8(999) 999-99-99"
+              />
+            </div>
+          </div>
+        )}
+        <h2 className="caption-benefist">Форма для заказа</h2>
+        {showForm && (
+          <form className="form" onSubmit={orderSubmit}>
+            <div className="form-margin">
+              {forms.map((form, index) => (
+                <div key={index} className="container-order">
+                  <p className="text">{index + 1} Выбор</p>
+                  <p className="text">Шаг 1</p>
+                  <select
+                    className="select-order"
+                    value={form.animalType}
+                    onChange={(e) => handleAnimalChange(index, e.target.value)}
+                  >
+                    <option value="">Выберите с\х животное</option>
+                    {animalTypes.map((animal) => (
+                      <option key={animal} value={animal}>
+                        {animal}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text">Шаг 2</p>
+                  <select
+                    className="select-order"
+                    value={form.feedType}
+                    onChange={(e) => handleFeedChange(index, e.target.value)}
+                  >
+                    <option value="">Выберите корм</option>
+                    {form.animalType &&
+                      production[form.animalType].map((feed) => (
+                        <option key={feed.id} value={feed.feed}>
+                          {feed.feed}
+                        </option>
+                      ))}
+                  </select>
+                  <p className="text">Шаг 3</p>
+                  <input
+                    className="input-order"
+                    type="number"
+                    value={form.amount}
+                    onChange={(e) => handleAmountChange(index, e.target.value)}
+                    placeholder="Количество мешков."
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                className="carousel-btn btn-add"
+                onClick={addNewRow}
+              >
+                + Добавить строку
+              </button>
+            </div>
+            <div className="order-container">
+              <div>
+                <p className="text">Яйцо-количество в десятках.</p>
+                <input
+                  className="input-order"
+                  type="number"
+                  value={eggs}
+                  onChange={(e) => handleEggsChange(e.target.value)}
+                  placeholder="Яйца десяток."
+                />
+              </div>
+              <div>
+                <p className="text">Тушки бройлера шт.</p>
+                <input
+                  className="input-order"
+                  type="number"
+                  value={carcassWeight}
+                  onChange={(e) => handleCarcassWeightChange(e.target.value)}
+                  placeholder="Введите количество шт."
+                />
+              </div>
+              <div>
+                <p className="text">Суточные цыплята</p>
+                <input
+                  className="input-order"
+                  type="number"
+                  value={broilerDay}
+                  onChange={(e) => handleBroilerDayChange(e.target.value)}
+                  placeholder="Введите количество шт."
+                />
+              </div>
+            </div>
+            <div>
+                <p className="text">Комментарий или дополнительная продукция</p>
+                <label htmlFor="textarea"></label>
+                <textarea
+                  id="textarea"
+                  name="textarea"
+                  className="input-textarea"
+                  type="number"
+                  value={textarea}
+                  onChange={(e) => setTextarea(e.target.value)}
+                  placeholder="Комментарий или через запятую дополнительная продукция"
+                />
+              </div>
+            <button className="carousel-btn btn-add">Оформить заказ</button>
+          </form>
+        )}
+        {!showForm && (
+          <div className="success-message">
+            <p className="text">Ваш заказ успешно отправлен!</p>
+            <button
+              className="carousel-btn"
+              onClick={() => {
+                setShowForm(true);
+                setOrderCreated(false);
+              }}
+            >
+              Сделать ещё один заказ
+            </button>
+          </div>
+        )}
+      </div>
     </>
-  )
+  );
 };
 
 export default FormOrder;

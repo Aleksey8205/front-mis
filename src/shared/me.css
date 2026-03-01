@@ -141,6 +141,22 @@ select {
     border-radius: 10px;
 }
 
+.input-textarea {
+    width: 98%;
+    max-width: 1000px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #ffffff;
+    color: #30529f;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.input-textarea:focus {
+    outline: 2px solid #4CAF50;
+}
+
 .input-order:focus {
     outline: 2px solid #4CAF50;
 }

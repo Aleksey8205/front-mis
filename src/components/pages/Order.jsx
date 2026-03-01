@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "../../shared/order.css";
 import { useSelector } from "react-redux";
+import { Search } from "lucide-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
 function Order() {
-  const authState = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth);
 
   const [orders, setOrders] = useState([]);
   const [usersInfo, setUsersInfo] = useState({});
   const [uniqueUserIds, setUniqueUserIds] = useState([]);
   const [expandedItems, setExpandedItems] = useState({});
   const [message, setMessage] = useState(null);
+  const [searchNumber, setSearchNumber] = useState('');
+  const [searchOrder, setSearchOrder] = useState();
+  const [searching, setIsSearching] = useState(false)
+
 
   useEffect(() => {
     async function loadAllData() {
@@ -115,9 +120,99 @@ function Order() {
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   };
 
+  const searchOrderId = (search) => {
+    fetch(`${API_BASE_URL}/order/search/${search}`, { credentials: 'include' })
+      .then(response => response.json()) 
+      .then(data => {
+        if (data.message) { 
+          setMessage(data.message); 
+        } else {
+          setSearchOrder(data);
+          setIsSearching(true)
+          console.log('Данные найдены:', data);
+        }
+      })
+      .catch(error => {
+        setMessage('Произошла неизвестная ошибка при поиске заказа');
+        console.error('Ошибка:', error);
+      });
+      
+  }
+
   return (
     <>
+    {user.user?.isAdmin ? (
       <div className="container-order-all">
+        <div className="container-order-search">
+          <label htmlFor="search"></label>
+          <input
+            className="search-order"
+            id="search"
+            name="search"
+            type="number"
+            placeholder="Поиск по номеру заказа"
+            value={searchNumber}
+            onChange={(e) => setSearchNumber(e.target.value)}
+          />
+          <button onClick={() => searchOrderId(searchNumber)} className="search-btn">
+            <p className="text-order">Поиск</p>
+            <Search></Search>
+          </button>
+        </div>
+        {searching ? (
+          <div className="orders_search__container">
+             <div className={`items-order ${searchOrder.isActive ? "" : "complete"}`}>
+             <div className="info-user">
+               <p>Номер Заказа: {searchOrder.orderNumber}</p>
+               {searchOrder && (!searchOrder.dopName || searchOrder.dopName.trim() === "") ? (
+                 <>
+                   <p className="text-order">
+                     Создано:
+                     {formatDate(searchOrder.createdAt)}
+                   </p>
+                   <p className="text-order">
+                     Имя фамилия:{" "}
+                     {usersInfo[searchOrder.user]?.name || "Имя неизвестно"}
+                   </p>
+                   <p className="text-order">
+                     Телефон: {usersInfo[searchOrder.user]?.phoneNumber || ""}
+                   </p>
+                 </>
+               ) : (
+                 <>
+                   <p className="text-order">Адрес: {searchOrder.dopAddress}</p>
+                   <p className="text-order">Имя: {searchOrder.dopName}</p>
+                   <p className="text-order">Телефон: {searchOrder.dopPhone}</p>
+                 </>
+               )}
+             </div>
+             <div className="item-details-wrapper">
+               <div className= "details-container">
+                 {searchOrder.items.map((item, i) => (
+                   <div className="item-description" key={i}>
+                     <p className="text-order">Название: {item.title}</p>
+                     <p className="text-order">
+                       Количество: {item.quantity} {item.unit}
+                     </p>
+                   </div>
+                 ))}
+                 <p className="text-order">{searchOrder.text}</p>
+               </div>
+             </div>
+             <div className="button-order">
+               <button
+                 className="carousel-btn"
+                 onClick={() => handleSuccess(searchOrder._id)}
+               >
+                 Выполнен
+               </button>
+             </div>
+           </div>
+          </div>
+          ): (
+            <p></p>
+          )}
+        <p className="text-order">{message}</p>
         <h2 className="caption">Активные заказы:</h2>
         <p className="text">{message?.message}</p>
         <div className="orders-container">
@@ -125,6 +220,7 @@ function Order() {
             activeOrders.map((order, index) => (
               <div className="items-order" key={index}>
                 <div className="info-user">
+                  <p>Номер Заказа: {order.orderNumber}</p>
                   {order && (!order.dopName || order.dopName.trim() === "") ? (
                     <>
                       <p className="text-order">
@@ -161,6 +257,7 @@ function Order() {
                         </p>
                       </div>
                     ))}
+                    <p className="text-order">{order.text}</p>
                   </div>
                 </div>
                 <div className="button-order">
@@ -195,6 +292,7 @@ function Order() {
             inactiveOrders.map((order, index) => (
               <div className="items-order complete" key={index}>
                 <div className="info-user">
+                  <p>Номер Заказа: {order.orderNumber}</p>
                   <p className="text-order">
                     Создано:
                     {formatDate(order.createdAt)}
@@ -221,6 +319,7 @@ function Order() {
                         </p>
                       </div>
                     ))}
+                    <p className="text-order">{order.text}</p>
                   </div>
                 </div>
                 <div className="button-order">
@@ -249,6 +348,10 @@ function Order() {
           )}
         </div>
       </div>
+    ) : (
+      <p>Доступ только администратору</p>
+    )}
+      
     </>
   );
 }

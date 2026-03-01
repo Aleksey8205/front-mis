@@ -123,6 +123,7 @@ function OrderUser({ orderCreated }) {
           activeOrders.map((order, index) => (
             <div className="items-order" key={index}>
               <div className="item-details-wrapper">
+                <p>Номер Заказа: {order.orderNumber}</p>
                 <p className="text-order">
                   Создано: 
                   {formatDate(order.createdAt)}
@@ -140,6 +141,7 @@ function OrderUser({ orderCreated }) {
                       </p>
                     </div>
                   ))}
+                  <p className="text-order">{order.text}</p>
                 </div>
               </div>
               <div className="button-order">
@@ -174,6 +176,7 @@ function OrderUser({ orderCreated }) {
           inactiveOrders.map((order, index) => (
             <div className="items-order complete" key={index}>
               <div className="item-details-wrapper">
+              <p>Номер Заказа: {order.orderNumber}</p>
                 <p className="text-order">
                 {formatDate(order.createdAt)}
                 </p>
@@ -190,6 +193,7 @@ function OrderUser({ orderCreated }) {
                       </p>
                     </div>
                   ))}
+                  <p className="text-order">{order.text}</p>
                 </div>
               </div>
               <div className="button-order">
