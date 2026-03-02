@@ -105,11 +105,12 @@ function Order() {
           credentials: "include",
         });
     
-        const data = await response.json();
-    
         if (response.ok) {
+          const data = await response.json();
           setMessage(data);
-          setOrders((prevOrders) => prevOrders.filter((o) => o._id !== order._id));
+          loadAllData();
+        } else {
+          throw new Error("Ошибка сервера при удалении заказа");
         }
       } catch (error) {
         console.error("Ошибка отправки:", error);
