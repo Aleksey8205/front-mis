@@ -15,12 +15,12 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 const HeaderFunc = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
-  const [orderActive, setOrderActive] = useState("");
+  const [orderActive, setOrderActive] = useState(null);
 
   const authState = useSelector((state) => state.auth);
 
-  if (authState.user?.isAdmin) {
-    useEffect(() => {
+  useEffect(() => {
+    if (authState.user?.isAdmin) {
       fetch(`${API_BASE_URL}/order/active`, { credentials: "include" })
         .then((response) => response.json())
         .then((result) => {
@@ -29,8 +29,8 @@ const HeaderFunc = () => {
         .catch((error) => {
           console.error("Ошибка при проверке пользователя:", error);
         });
-    }, []);
-  }
+    }
+  }, [authState]);
 
   return (
     <>
@@ -241,7 +241,7 @@ const HeaderFunc = () => {
                       }
                     >
                       Все заказы
-                      {orderActive.count > 0 && (
+                      {orderActive !== null && orderActive.count > 0 && (
                         <span className="order-count">{orderActive.count}</span>
                       )}
                     </Link>
