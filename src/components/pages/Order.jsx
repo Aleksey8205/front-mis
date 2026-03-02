@@ -98,24 +98,22 @@ function Order() {
     .filter((order) => !order.isActive)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    const deleteOrder = async (order) => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/order/delete-order/${order._id}`, {
-          method: "DELETE",
-          credentials: "include",
-        });
-    
-        if (response.ok) {
-          const data = await response.json();
-          setMessage(data);
-          loadAllData();
-        } else {
-          throw new Error("Ошибка сервера при удалении заказа");
-        }
-      } catch (error) {
+  const  deleteOrder =  (order) => {
+    fetch(`${API_BASE_URL}/order/delete-order/${order._id}`, {
+      method: "DELETE",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setMessage(data);
+        setOrders((prevOrders) =>
+          prevOrders?.filter((o) => o._id !== order._id)
+        );
+      })
+      .catch((error) => {
         console.error("Ошибка отправки:", error);
-      }
-    };
+      });
+  };
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
