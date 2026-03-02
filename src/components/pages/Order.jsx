@@ -13,10 +13,9 @@ function Order() {
   const [uniqueUserIds, setUniqueUserIds] = useState([]);
   const [expandedItems, setExpandedItems] = useState({});
   const [message, setMessage] = useState(null);
-  const [searchNumber, setSearchNumber] = useState('');
+  const [searchNumber, setSearchNumber] = useState("");
   const [searchOrder, setSearchOrder] = useState();
-  const [searching, setIsSearching] = useState(false)
-
+  const [searching, setIsSearching] = useState(false);
 
   useEffect(() => {
     async function loadAllData() {
@@ -100,22 +99,23 @@ function Order() {
 
     const deleteOrder = async (order) => {
       try {
-      const response = await fetch(`${API_BASE_URL}/order/delete-order/${order._id}`, {
-      method: "DELETE",
-      credentials: "include",
-      });
-     
-      if (response.ok) {
-      const data = await response.json();
-      setMessage(data); 
-      } else {
-      throw new Error("Ошибка сервера при удалении заказа");
-      }
+        setMessage("Заказ удаляется...");
+    
+        const response = await fetch(`${API_BASE_URL}/order/delete-order/${order._id}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
+    
+        if (response.ok) {
+          setMessage("Заказ успешно удалён!");
+        } else {
+          throw new Error("Ошибка сервера при удалении заказа");
+        }
       } catch (error) {
-      console.error("Ошибка отправки:", error);
-      setMessage("Возникла ошибка при удалении заказа"); 
+        console.error("Ошибка отправки:", error);
+        setMessage("Возникла ошибка при удалении заказа");
       }
-     };
+    };
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -123,236 +123,249 @@ function Order() {
   };
 
   const searchOrderId = (search) => {
-    fetch(`${API_BASE_URL}/order/search/${search}`, { credentials: 'include' })
-      .then(response => response.json()) 
-      .then(data => {
-        if (data.message) { 
-          setMessage(data.message); 
+    fetch(`${API_BASE_URL}/order/search/${search}`, { credentials: "include" })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          setMessage(data.message);
         } else {
           setSearchOrder(data);
-          setIsSearching(true)
+          setIsSearching(true);
         }
       })
-      .catch(error => {
-        setMessage('Произошла неизвестная ошибка при поиске заказа');
-        console.error('Ошибка:', error);
+      .catch((error) => {
+        setMessage("Произошла неизвестная ошибка при поиске заказа");
+        console.error("Ошибка:", error);
       });
-      
-  }
+  };
 
   return (
     <>
-    {user.user?.isAdmin ? (
-      <div className="container-order-all">
-        <div className="container-order-search">
-          <label htmlFor="search"></label>
-          <input
-            className="search-order"
-            id="search"
-            name="search"
-            type="number"
-            placeholder="Поиск по номеру заказа"
-            value={searchNumber}
-            onChange={(e) => setSearchNumber(e.target.value)}
-          />
-          <button onClick={() => searchOrderId(searchNumber)} className="search-btn">
-            <p className="text-order">Поиск</p>
-            <Search></Search>
-          </button>
-        </div>
-        {searching ? (
-          <div className="orders_search__container">
-             <div className={`items-order ${searchOrder.isActive ? "" : "complete"}`}>
-             <div className="info-user">
-               <p>Номер Заказа: {searchOrder.orderNumber}</p>
-               {searchOrder && (!searchOrder.dopName || searchOrder.dopName.trim() === "") ? (
-                 <>
-                   <p className="text-order">
-                     Создано:
-                     {formatDate(searchOrder.createdAt)}
-                   </p>
-                   <p className="text-order">
-                     Имя фамилия:{" "}
-                     {usersInfo[searchOrder.user]?.name || "Имя неизвестно"}
-                   </p>
-                   <p className="text-order">
-                     Телефон: {usersInfo[searchOrder.user]?.phoneNumber || ""}
-                   </p>
-                 </>
-               ) : (
-                 <>
-                   <p className="text-order">Адрес: {searchOrder.dopAddress}</p>
-                   <p className="text-order">Имя: {searchOrder.dopName}</p>
-                   <p className="text-order">Телефон: {searchOrder.dopPhone}</p>
-                 </>
-               )}
-             </div>
-             <div className="item-details-wrapper">
-               <div className= "details-container">
-                 {searchOrder.items?.map((item, i) => (
-                   <div className="item-description" key={i}>
-                     <p className="text-order">Название: {item.title}</p>
-                     <p className="text-order">
-                       Количество: {item.quantity} {item.unit}
-                     </p>
-                   </div>
-                 ))}
-                 <p className="text-order">{searchOrder.text}</p>
-               </div>
-             </div>
-             <div className="button-order">
-               <button
-                 className="carousel-btn"
-                 onClick={() => handleSuccess(searchOrder._id)}
-               >
-                 Выполнен
-               </button>
-             </div>
-           </div>
+      {user.user?.isAdmin ? (
+        <div className="container-order-all">
+          <div className="container-order-search">
+            <label htmlFor="search"></label>
+            <input
+              className="search-order"
+              id="search"
+              name="search"
+              type="number"
+              placeholder="Поиск по номеру заказа"
+              value={searchNumber}
+              onChange={(e) => setSearchNumber(e.target.value)}
+            />
+            <button
+              onClick={() => searchOrderId(searchNumber)}
+              className="search-btn"
+            >
+              <p className="text-order">Поиск</p>
+              <Search></Search>
+            </button>
           </div>
-          ): (
-            <p></p>
-          )}
-        <p className="text-order">{message}</p>
-        <h2 className="caption">Активные заказы:</h2>
-        <p className="text">{message?.message}</p>
-        <div className="orders-container">
-          {activeOrders.length > 0 ? (
-            activeOrders.map((order, index) => (
-              <div className="items-order" key={index}>
+          {searching ? (
+            <div className="orders_search__container">
+              <div
+                className={`items-order ${
+                  searchOrder.isActive ? "" : "complete"
+                }`}
+              >
                 <div className="info-user">
-                  <p>Номер Заказа: {order.orderNumber}</p>
-                  {order && (!order.dopName || order.dopName.trim() === "") ? (
+                  <p>Номер Заказа: {searchOrder.orderNumber}</p>
+                  {searchOrder &&
+                  (!searchOrder.dopName ||
+                    searchOrder.dopName.trim() === "") ? (
                     <>
                       <p className="text-order">
                         Создано:
-                        {formatDate(order.createdAt)}
+                        {formatDate(searchOrder.createdAt)}
                       </p>
                       <p className="text-order">
                         Имя фамилия:{" "}
-                        {usersInfo[order.user]?.name || "Имя неизвестно"}
+                        {usersInfo[searchOrder.user]?.name || "Имя неизвестно"}
                       </p>
                       <p className="text-order">
-                        Телефон: {usersInfo[order.user]?.phoneNumber || ""}
+                        Телефон:{" "}
+                        {usersInfo[searchOrder.user]?.phoneNumber || ""}
                       </p>
                     </>
                   ) : (
                     <>
-                      <p className="text-order">Адрес: {order.dopAddress}</p>
-                      <p className="text-order">Имя: {order.dopName}</p>
-                      <p className="text-order">Телефон: {order.dopPhone}</p>
+                      <p className="text-order">
+                        Адрес: {searchOrder.dopAddress}
+                      </p>
+                      <p className="text-order">Имя: {searchOrder.dopName}</p>
+                      <p className="text-order">
+                        Телефон: {searchOrder.dopPhone}
+                      </p>
                     </>
                   )}
                 </div>
                 <div className="item-details-wrapper">
-                  <div
-                    className={`details-container ${
-                      expandedItems[index] ? "expanded" : "collapsed"
-                    }`}
-                  >
-                    {order.items.map((item, i) => (
-                      <div className="item-description" key={`${index}-${i}`}>
+                  <div className="details-container">
+                    {searchOrder.items?.map((item, i) => (
+                      <div className="item-description" key={i}>
                         <p className="text-order">Название: {item.title}</p>
                         <p className="text-order">
                           Количество: {item.quantity} {item.unit}
                         </p>
                       </div>
                     ))}
-                    <p className="text-order">{order.text}</p>
+                    <p className="text-order">{searchOrder.text}</p>
                   </div>
                 </div>
                 <div className="button-order">
                   <button
                     className="carousel-btn"
-                    onClick={() => {
-                      setExpandedItems((prevState) => ({
-                        ...prevState,
-                        [index]: !prevState[index],
-                      }));
-                    }}
-                  >
-                    {expandedItems[index] ? "Скрыть" : "Развернуть"}
-                  </button>
-                  <button
-                    className="carousel-btn"
-                    onClick={() => handleSuccess(order._id)}
+                    onClick={() => handleSuccess(searchOrder._id)}
                   >
                     Выполнен
                   </button>
                 </div>
               </div>
-            ))
+            </div>
           ) : (
-            <p className="text">Нет активных заказов</p>
+            <p></p>
           )}
-        </div>
-
-        <h2 className="caption">Завершенные заказы:</h2>
-        <div className="orders-container ">
-          {inactiveOrders.length > 0 ? (
-            inactiveOrders.map((order, index) => (
-              <div className="items-order complete" key={index}>
-                <div className="info-user">
-                  <p>Номер Заказа: {order.orderNumber}</p>
-                  <p className="text-order">
-                    Создано:
-                    {formatDate(order.createdAt)}
-                  </p>
-                  <p className="text-order">
-                    Имя фамилия:{" "}
-                    {usersInfo[order.user]?.name || "Имя неизвестно"}
-                  </p>
-                  <p className="text-order">
-                    Телефон: {usersInfo[order.user]?.phoneNumber || ""}
-                  </p>
-                </div>
-                <div className="item-details-wrapper">
-                  <div
-                    className={`details-container ${
-                      expandedItems[order._id] ? "expanded" : "collapsed"
-                    }`}
-                  >
-                    {order.items.map((item, i) => (
-                      <div className="item-description" key={`${index}-${i}`}>
-                        <p className="text-order">Название: {item.title}</p>
+          <p className="text-order">{message}</p>
+          <h2 className="caption">Активные заказы:</h2>
+          <p className="text">{message?.message}</p>
+          <div className="orders-container">
+            {activeOrders.length > 0 ? (
+              activeOrders.map((order, index) => (
+                <div className="items-order" key={index}>
+                  <div className="info-user">
+                    <p>Номер Заказа: {order.orderNumber}</p>
+                    {order &&
+                    (!order.dopName || order.dopName.trim() === "") ? (
+                      <>
                         <p className="text-order">
-                          Количество: {item.quantity} {item.unit}
+                          Создано:
+                          {formatDate(order.createdAt)}
                         </p>
-                      </div>
-                    ))}
-                    <p className="text-order">{order.text}</p>
+                        <p className="text-order">
+                          Имя фамилия:{" "}
+                          {usersInfo[order.user]?.name || "Имя неизвестно"}
+                        </p>
+                        <p className="text-order">
+                          Телефон: {usersInfo[order.user]?.phoneNumber || ""}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-order">Адрес: {order.dopAddress}</p>
+                        <p className="text-order">Имя: {order.dopName}</p>
+                        <p className="text-order">Телефон: {order.dopPhone}</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="item-details-wrapper">
+                    <div
+                      className={`details-container ${
+                        expandedItems[index] ? "expanded" : "collapsed"
+                      }`}
+                    >
+                      {order.items.map((item, i) => (
+                        <div className="item-description" key={`${index}-${i}`}>
+                          <p className="text-order">Название: {item.title}</p>
+                          <p className="text-order">
+                            Количество: {item.quantity} {item.unit}
+                          </p>
+                        </div>
+                      ))}
+                      <p className="text-order">{order.text}</p>
+                    </div>
+                  </div>
+                  <div className="button-order">
+                    <button
+                      className="carousel-btn"
+                      onClick={() => {
+                        setExpandedItems((prevState) => ({
+                          ...prevState,
+                          [index]: !prevState[index],
+                        }));
+                      }}
+                    >
+                      {expandedItems[index] ? "Скрыть" : "Развернуть"}
+                    </button>
+                    <button
+                      className="carousel-btn"
+                      onClick={() => handleSuccess(order._id)}
+                    >
+                      Выполнен
+                    </button>
                   </div>
                 </div>
-                <div className="button-order">
-                  <button
-                    className=" btn-complete"
-                    onClick={() => {
-                      setExpandedItems((prevState) => ({
-                        ...prevState,
-                        [order._id]: !prevState[order._id],
-                      }));
-                    }}
-                  >
-                    {expandedItems[order._id] ? "Скрыть" : "Развернуть"}
-                  </button>
-                  <button
-                    className="carousel-btn"
-                    onClick={() => deleteOrder(order)}
-                  >
-                    Удалить
-                  </button>
+              ))
+            ) : (
+              <p className="text">Нет активных заказов</p>
+            )}
+          </div>
+
+          <h2 className="caption">Завершенные заказы:</h2>
+          <div className="orders-container ">
+            {inactiveOrders.length > 0 ? (
+              inactiveOrders.map((order, index) => (
+                <div className="items-order complete" key={index}>
+                  <div className="info-user">
+                    <p>Номер Заказа: {order.orderNumber}</p>
+                    <p className="text-order">
+                      Создано:
+                      {formatDate(order.createdAt)}
+                    </p>
+                    <p className="text-order">
+                      Имя фамилия:{" "}
+                      {usersInfo[order.user]?.name || "Имя неизвестно"}
+                    </p>
+                    <p className="text-order">
+                      Телефон: {usersInfo[order.user]?.phoneNumber || ""}
+                    </p>
+                  </div>
+                  <div className="item-details-wrapper">
+                    <div
+                      className={`details-container ${
+                        expandedItems[order._id] ? "expanded" : "collapsed"
+                      }`}
+                    >
+                      {order.items.map((item, i) => (
+                        <div className="item-description" key={`${index}-${i}`}>
+                          <p className="text-order">Название: {item.title}</p>
+                          <p className="text-order">
+                            Количество: {item.quantity} {item.unit}
+                          </p>
+                        </div>
+                      ))}
+                      <p className="text-order">{order.text}</p>
+                    </div>
+                  </div>
+                  <div className="button-order">
+                    <button
+                      className=" btn-complete"
+                      onClick={() => {
+                        setExpandedItems((prevState) => ({
+                          ...prevState,
+                          [order._id]: !prevState[order._id],
+                        }));
+                      }}
+                    >
+                      {expandedItems[order._id] ? "Скрыть" : "Развернуть"}
+                    </button>
+                    <button
+                      className="carousel-btn"
+                      onClick={() => deleteOrder(order)}
+                    >
+                      Удалить
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p className="text">Нет завершенных заказов</p>
-          )}
+              ))
+            ) : (
+              <p className="text">Нет завершенных заказов</p>
+            )}
+          </div>
         </div>
-      </div>
-    ) : (
-      <p>Доступ только администратору</p>
-    )}
-      
+      ) : (
+        <p>Доступ только администратору</p>
+      )}
     </>
   );
 }
