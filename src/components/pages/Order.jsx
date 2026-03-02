@@ -129,7 +129,6 @@ function Order() {
         } else {
           setSearchOrder(data);
           setIsSearching(true)
-          console.log('Данные найдены:', data);
         }
       })
       .catch(error => {
@@ -188,7 +187,7 @@ function Order() {
              </div>
              <div className="item-details-wrapper">
                <div className= "details-container">
-                 {searchOrder.items.map((item, i) => (
+                 {searchOrder.items?.map((item, i) => (
                    <div className="item-description" key={i}>
                      <p className="text-order">Название: {item.title}</p>
                      <p className="text-order">

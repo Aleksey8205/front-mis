@@ -126,7 +126,6 @@ const FormOrder = ({ onOrderCreated }) => {
     text: textarea,
   };
   
-  console.log(finalPayload)
 
   const orderSubmit = (event) => {
     event.preventDefault();
