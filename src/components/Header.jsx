@@ -19,7 +19,7 @@ const HeaderFunc = () => {
 
   const authState = useSelector((state) => state.auth);
 
-  if (authState.user.isAdmin) {
+  if (authState.user?.isAdmin) {
     useEffect(() => {
       fetch(`${API_BASE_URL}/order/active`, { credentials: "include" })
         .then((response) => response.json())
