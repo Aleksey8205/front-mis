@@ -91,7 +91,6 @@ function OrderUser({ orderCreated }) {
         .catch((error) => {
           console.error("Ошибка обновления:", error);
         });
-
   };
 
   const deleteOrder = (order) => {
