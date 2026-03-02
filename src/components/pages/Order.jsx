@@ -59,7 +59,7 @@ function Order() {
       }
     }
 
-    
+    loadAllData();
   }, []);
 
   async function handleSuccess(orderId) {
@@ -105,6 +105,7 @@ function Order() {
     })
       .then((response) => response.json())
       .then((data) => {
+        loadAllData()
         setMessage(data);
         setOrders((prevOrders) =>
           prevOrders.filter((o) => o._id !== order._id)
