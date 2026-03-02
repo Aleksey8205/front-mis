@@ -106,9 +106,6 @@ function Order() {
       .then((response) => response.json())
       .then((data) => {
         setMessage(data);
-        setOrders((prevOrders) =>
-          prevOrders?.filter((o) => o._id !== order._id)
-        );
       })
       .catch((error) => {
         console.error("Ошибка отправки:", error);
