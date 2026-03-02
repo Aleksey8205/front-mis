@@ -97,25 +97,31 @@ function Order() {
     .filter((order) => !order.isActive)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    const deleteOrder = async (order) => {
-      try {
-        setMessage("Заказ удаляется...");
-    
-        const response = await fetch(`${API_BASE_URL}/order/delete-order/${order._id}`, {
+  const deleteOrder = async (order) => {
+    try {
+      setMessage("Заказ удаляется...");
+
+      const response = await fetch(
+        `${API_BASE_URL}/order/delete-order/${order._id}`,
+        {
           method: "DELETE",
           credentials: "include",
-        });
-    
-        if (response.ok) {
-          setMessage("Заказ успешно удалён!");
-        } else {
-          throw new Error("Ошибка сервера при удалении заказа");
         }
-      } catch (error) {
-        console.error("Ошибка отправки:", error);
-        setMessage("Возникла ошибка при удалении заказа");
+      );
+
+      if (response.ok) {
+        setMessage("Заказ успешно удалён!");
+        setOrders((prevOrders) =>
+          prevOrders.filter((o) => o._id !== order._id)
+        );
+      } else {
+        throw new Error("Ошибка сервера при удалении заказа");
       }
-    };
+    } catch (error) {
+      console.error("Ошибка отправки:", error);
+      setMessage("Возникла ошибка при удалении заказа");
+    }
+  };
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
