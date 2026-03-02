@@ -126,3 +126,22 @@
     justify-self: flex-end;
     margin-right: 20px;
 }
+
+.order-count {
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+
+    border: 1px solid black;
+    border-radius: 50%; 
+    width: 25px; 
+    height: 25px; 
+    background-color: rgb(248, 0, 0);
+
+    font-size: 16px; 
+    color: white; 
+
+    position: relative;
+    bottom: 10px;
+    right: 5px;
+}

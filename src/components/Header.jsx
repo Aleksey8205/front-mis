@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "../shared/header.css";
@@ -10,10 +10,27 @@ import SignUpModal from "./modals/SignUp";
 
 import { useSelector } from "react-redux";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
+
 const HeaderFunc = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [registerModalOpen, setRegisterModalOpen] = useState(false)
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
+  const [orderActive, setOrderActive] = useState("");
+
   const authState = useSelector((state) => state.auth);
+
+  if (authState.user.isAdmin) {
+    useEffect(() => {
+      fetch(`${API_BASE_URL}/order/active`, { credentials: "include" })
+        .then((response) => response.json())
+        .then((result) => {
+          setOrderActive(result);
+        })
+        .catch((error) => {
+          console.error("Ошибка при проверке пользователя:", error);
+        });
+    }, []);
+  }
 
   return (
     <>
@@ -148,12 +165,14 @@ const HeaderFunc = () => {
                 <>
                   <li className="item-list linked">
                     <Link
-                    className="linked"
-                    onClick={(event) => {
-                      event.preventDefault(); 
-                      document.getElementById("menu-toggle")?.setAttribute("checked", false); 
-                      setLoginModalOpen(true); 
-                    }}
+                      className="linked"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        document
+                          .getElementById("menu-toggle")
+                          ?.setAttribute("checked", false);
+                        setLoginModalOpen(true);
+                      }}
                     >
                       Войти
                     </Link>
@@ -163,10 +182,12 @@ const HeaderFunc = () => {
                       className="linked"
                       to="/signup"
                       onClick={(event) => {
-                      event.preventDefault(); 
-                      document.getElementById("menu-toggle")?.setAttribute("checked", false); 
-                      setRegisterModalOpen(true); 
-                    }}
+                        event.preventDefault();
+                        document
+                          .getElementById("menu-toggle")
+                          ?.setAttribute("checked", false);
+                        setRegisterModalOpen(true);
+                      }}
                     >
                       Регистрация
                     </Link>
@@ -211,15 +232,20 @@ const HeaderFunc = () => {
               </li>
               <li className="item-list linked span2">
                 {authState.user?.isAdmin ? (
-                  <Link
-                    className="linked"
-                    to="/order"
-                    onClick={() =>
-                      (document.getElementById("menu-toggle").checked = false)
-                    }
-                  >
-                    Все заказы
-                  </Link>
+                  <div className="order-active">
+                    <Link
+                      className="linked"
+                      to="/order"
+                      onClick={() =>
+                        (document.getElementById("menu-toggle").checked = false)
+                      }
+                    >
+                      Все заказы
+                      {orderActive.count > 0 && (
+                        <span className="order-count">{orderActive.count}</span>
+                      )}
+                    </Link>
+                  </div>
                 ) : null}
               </li>
             </ul>
