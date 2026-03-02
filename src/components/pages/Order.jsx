@@ -98,7 +98,7 @@ function Order() {
     .filter((order) => !order.isActive)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  const deleteOrder = (order) => {
+  const  deleteOrder = async (order) => {
     fetch(`${API_BASE_URL}/order/delete-order/${order._id}`, {
       method: "DELETE",
       credentials: "include",
