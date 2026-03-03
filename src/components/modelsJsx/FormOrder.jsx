@@ -145,6 +145,7 @@ const FormOrder = ({ onOrderCreated }) => {
         setForms([{ animalType: "", feedType: "", amount: "" }]);
         setEggs("");
         setCarcassWeight("");
+        setTextarea("")
         onOrderCreated();
       })
       .catch((error) => {
