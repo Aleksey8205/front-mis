@@ -18,7 +18,6 @@ function About() {
   return (
     <>
       <Helmet>
-        <title>МИСБРОЙЛЕР О нас</title>
         <meta
           name="description"
           content="ЛПХ МисБройлер занимается инкубацией и выращиванием цыплят бройлера из инкубационного яйца лучших отечественных и импортных производителей кросс РОСС 308 и КОББ 500 круглогодично"
@@ -33,6 +32,7 @@ function About() {
         />
         <meta property="og:site_name" content="MISBROYLER" />
         <meta property="og:locale" content="ru_RU" />
+        <title>ЛПХ МИСБРОЙЛЕР О нас — Круглогодичная Инкубация и Выращивание Цыплят Бройлеров РОСС 308 и КОББ 500</title>
       </Helmet>
       <div id="content">
         <div className="content">
