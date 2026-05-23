@@ -62,7 +62,6 @@ function SignInModal({isOpen, onClose}) {
   const resetPassword = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/user/fogot-password`, {
-        credentials: 'include',
         method: "POST",
         headers: {
           "Content-Type": "application/json",
