@@ -73,47 +73,47 @@ const ResetPasswordPage = () => {
     }
   };
 
-  if (!token) {
-    return <div>Загрузка...</div>;
-  }
 
   return (
     <div className="login-form">
       <h2 className="title">Сброс пароля</h2>
 
       {statusMessage && <p className="status-message">{statusMessage}</p>}
-    
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="label" htmlFor="password">Новый пароль: </label>
-          <input
-          className="input-field"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            disabled={isLoading}
-          />
-        </div>
+      {token ? (
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="label" htmlFor="password">Новый пароль: </label>
+            <input
+              className="input-field"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </div>
 
-        <div className="form-group">
-          <label className="label"  htmlFor="confirm-password">Повторите пароль: </label>
-          <input
-          className="input-field"
-            type="password"
-            id="confirm-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            disabled={isLoading}
-          />
-        </div>
+          <div className="form-group">
+            <label className="label" htmlFor="confirm-password">Повторите пароль: </label>
+            <input
+              className="input-field"
+              type="password"
+              id="confirm-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </div>
 
-        <button className="carousel-btn" type="submit" disabled={isLoading}>
-          {isLoading ? "Сохраняю..." : "Установить пароль"}
-        </button>
-      </form>
+          <button className="carousel-btn" type="submit" disabled={isLoading}>
+            {isLoading ? "Сохраняю..." : "Установить пароль"}
+          </button>
+        </form>
+      ) : (
+        <div>Загрузка...</div>
+      )}
     </div>
   );
 };
