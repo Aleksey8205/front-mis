@@ -1,0 +1,230 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Бройлер",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "Старт",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/cook-nutrition-BWlhHFvx.webp"
+        },
+        {
+            "id": 2,
+            "name": "Бройлер",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "Рост",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/cook-nutrition-BWlhHFvx.webp"
+        },
+        {
+            "id": 3,
+            "name": "Бройлер",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "Финиш",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/cook-nutrition-BWlhHFvx.webp"
+        },
+        {
+            "id": 23,
+            "name": "Яйцо куриное",
+            "category": "Яйца",
+            "type": "",
+            "feed": "",
+            "unit": "В десятках",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/layers-eggz-Dfq4rYyL.png"
+        },
+        {
+            "id": 24,
+            "name": "Тушка бройлера",
+            "category": "Мясо птицы",
+            "type": "Мясо птицы",
+            "feed": "",
+            "unit": "шт.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/tushka-29yac8eV.png"
+        },
+        {
+            "id": 25,
+            "name": "Суточные цыплята",
+            "category": "Цыплята",
+            "type": "",
+            "feed": "",
+            "unit": "шт.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/broiler-day-CF3p2pIY.png"
+        },
+        {
+            "id": 4,
+            "name": "Кролик",
+            "category": "Комбикорм",
+            "feed": "На откорме",
+            "type": "Фаза корма:",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/rabbit-nutrition-DxPWBF13.webp"
+        },
+        {
+            "id": 5,
+            "name": "Кролик",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "После отъема",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/rabbit-nutrition-DxPWBF13.webp"
+        },
+        {
+            "id": 6,
+            "name": "Кролик",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "Матки",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/rabbit-nutrition-DxPWBF13.webp"
+        },
+        {
+            "id": 7,
+            "name": "Кролик",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "До отъема",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/rabbit-nutrition-DxPWBF13.webp"
+        },
+        {
+            "id": 8,
+            "name": "Свинья",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "Старт",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/pig-nutrition-C4V4caFC.webp"
+        },
+        {
+            "id": 9,
+            "name": "Свинья",
+            "category": "Комбикорм",
+            "type": "Фаза корма:",
+            "feed": "Рост",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/pig-nutrition-C4V4caFC.webp"
+        },
+        {
+            "id": 10,
+            "name": "Свинья",
+            "category": "Комбикорм",
+            "type": "Фаза корма :",
+            "feed": "Финиш",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/pig-nutrition-C4V4caFC.webp"
+        },
+        {
+            "id": 11,
+            "name": "Свинья",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Megapig",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/pig-nutrition-C4V4caFC.webp"
+        },
+        {
+            "id": 12,
+            "name": "Несушка",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Старт",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/chicken-nutrition-_oafnyYB.webp"
+        },
+        {
+            "id": 13,
+            "name": "Несушка",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Рост",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/chicken-nutrition-_oafnyYB.webp"
+        },
+        {
+            "id": 14,
+            "name": "Несушка",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Период яйцекладки",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/chicken-nutrition-_oafnyYB.webp"
+        },
+        {
+            "id": 15,
+            "name": "Перепел",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Старт",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/quail-nutrition-O2Fv7aXJ.webp"
+        },
+        {
+            "id": 16,
+            "name": "Перепел",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Рост",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/quail-nutrition-O2Fv7aXJ.webp"
+        },
+        {
+            "id": 17,
+            "name": "Перепел",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Финиш",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/quail-nutrition-O2Fv7aXJ.webp"
+        },
+        {
+            "id": 18,
+            "name": "Индюк",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Старт",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/gobbler-nutrition-Dn0umjWB.webp"
+        },
+        {
+            "id": 19,
+            "name": "Индюк",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Рост",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/gobbler-nutrition-Dn0umjWB.webp"
+        },
+        {
+            "id": 20,
+            "name": "Индюк",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Финиш",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/gobbler-nutrition-Dn0umjWB.webp"
+        },
+        {
+            "id": 21,
+            "name": "Водоплавающие",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Старт",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/duck-nutrition-CCdYPHcY.webp"
+        },
+        {
+            "id": 22,
+            "name": "Водоплавающие",
+            "category": "Комбикорм",
+            "type": "Фаза корма",
+            "feed": "Рост",
+            "unit": "Меш.",
+            "coverImage": "https://xn--90aihfkcqped.xn--p1ai/assets/duck-nutrition-CCdYPHcY.webp"
+        }
+        
+    ]
+}

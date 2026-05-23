@@ -155,8 +155,8 @@ const FormOrder = ({ onOrderCreated }) => {
 
   return (
     <>
+     {authState && authState.user?.isAdmin && (
       <div className="formOrder">
-        {authState && authState.user?.isAdmin && (
           <div className="order-container">
             <div>
               <p className="text">Адрес(если требуется)</p>
@@ -189,7 +189,7 @@ const FormOrder = ({ onOrderCreated }) => {
               />
             </div>
           </div>
-        )}
+        
         <h2 className="caption-benefist">Форма для заказа</h2>
         {showForm && (
           <form className="form" onSubmit={orderSubmit}>
@@ -305,6 +305,7 @@ const FormOrder = ({ onOrderCreated }) => {
           </div>
         )}
       </div>
+      )}
     </>
   );
 };

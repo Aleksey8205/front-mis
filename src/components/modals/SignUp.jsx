@@ -13,7 +13,6 @@ function SignUpModal({isOpen, onClose}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,9 +37,8 @@ function SignUpModal({isOpen, onClose}) {
         },
         body: JSON.stringify({
           name,
-          email,
+          email: email.toLocaleLowerCase(),
           password,
-          userName: login,
           contactPhone: phoneNumber,
         }),
       });
@@ -130,19 +128,6 @@ function SignUpModal({isOpen, onClose}) {
           required
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="input-field"
-        />
-
-        <label htmlFor="login" className="label">
-          Логин
-        </label>
-        <input
-          type="text"
-          id="login"
-          placeholder="например ivan1234"
-          required
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
           className="input-field"
         />
 

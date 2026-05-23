@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../shared/review.css";
 import images from "../../javaScript/images.js";
 import { useSelector } from "react-redux";
+import { Star } from "lucide-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
@@ -216,7 +217,7 @@ function Review() {
         )}
 
         <div style={{ textAlign: "right" }}>
-          <p className="text">Средний рейтинг: {calculateRating(reviews)} ★</p>
+          <p className="text">Средний рейтинг: {calculateRating(reviews)} <Star className="star-field"></Star></p>
         </div>
         <div className="reviews-container">
           {reviews.length > 0 ? (

@@ -192,6 +192,15 @@
   padding-bottom: 10px;
 }
 
+.star-field {
+  width: 30px;
+  height: 30px;
+  color: gold;
+ 
+  fill: gold;
+  padding-left: 10px
+}
+
 @media (max-width: 700px) {
   .star-caption {
     display: block;

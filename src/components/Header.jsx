@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
+
 const HeaderFunc = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
@@ -99,7 +100,7 @@ const HeaderFunc = () => {
                   (document.getElementById("menu-toggle").checked = false)
                 }
               >
-                Продукция
+                Корзина
               </Link>
             </li>
             <li className="item-list linked">
@@ -209,7 +210,7 @@ const HeaderFunc = () => {
                   <li className="item-list linked">
                     <Link
                       className="linked"
-                      to="/me"
+                      to="/product"
                       onClick={() =>
                         (document.getElementById("menu-toggle").checked = false)
                       }
