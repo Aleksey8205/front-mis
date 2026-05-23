@@ -101,7 +101,6 @@ const ProductBasket = () => {
       items: withoutId,
       text: text,
     };
-    console.log(withoutId);
     try {
       const response = await fetch(`${API_BASE_URL}/order/create-order`, {
         credentials: "include",
