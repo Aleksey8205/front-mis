@@ -39,7 +39,7 @@ function App() {
         <Route path="/reviews" element={<Review />} />
         <Route path="/about" element={<About />} />
         {/* <Route path="/product" element={<Product />} /> */}
-        <Route  path="/reset-password?" element={<ResetPasswordPage />}/>
+        <Route  path="/reset-password" element={<ResetPasswordPage />}/>
         <Route path="/product" element={<ProductBasket />} />
       </Routes>
       <FooterFunc />
