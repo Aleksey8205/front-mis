@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MisLogo from "../public/images/image-index/mis-logo.png";
 import chickenGif from "../public/images/image-index/chicken-gif.gif";
-import telegramSvg from "../public/images/image-index/telegram.png";
-import whattsapp from "../public/images/image-index/whattsapp.png";
+// import telegramSvg from "../public/images/image-index/telegram.png";
+// import whattsapp from "../public/images/image-index/whattsapp.png";
+import MAX from "../public/images/svg/MAX-32x32.png"
 
 const FooterFunc = () => {
   return (
@@ -45,7 +46,7 @@ const FooterFunc = () => {
               </li>
               <li className="nav-list">
                 <Link className="link" to="/product">
-                  Продукция
+                  Корзина
                 </Link>
               </li>
               <li className="nav-list">
@@ -76,7 +77,7 @@ const FooterFunc = () => {
               </a>
 
               <div className="social-icons">
-                <a href="https://wa.me/+79169927150">
+                {/* <a href="https://wa.me/+79169927150">
                   <img
                     className="whatsapp-icon"
                     src={whattsapp}
@@ -89,6 +90,9 @@ const FooterFunc = () => {
                     src={telegramSvg}
                     alt="Telegram"
                   />
+                </a> */}
+                <a href="">
+                  <img src="https://maxicons.ru/icons/MAX.svg" alt="MAX" width={50} height={50} />
                 </a>
               </div>
 

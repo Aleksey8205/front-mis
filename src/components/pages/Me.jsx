@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import FormOrder from "../modelsJsx/formOrder.jsx";
+// import FormOrder from "../modelsJsx/formOrder.jsx";
 import "../../shared/me.css";
 import LogOutButton from "../modelsJsx/LogoutBtn.jsx";
 import OrderUser from "../modelsJsx/OrderUser.jsx";
 import { useSelector } from 'react-redux';
 
 import { useCheckAuth } from './../../utils/checkAuth';
+import CreateProd from './../modelsJsx/CreateProd';
 
 function Me() {
 
@@ -30,7 +31,12 @@ function Me() {
                     <p>Почта: {authState.user?.email}</p>
                     <p>Телефон: {authState.user?.contactPhone}</p>
                   </div>
-                  <FormOrder  onOrderCreated={() => setOrderCreated(true)}/>
+                  {authState && authState.user?.isAdmin && (
+                    <>
+                  {/* <FormOrder  onOrderCreated={() => setOrderCreated(true)}/> */}
+                  <CreateProd />
+                  </>
+                  )}
                 </div>
               </div>
               <OrderUser orderCreated={orderCreated} />

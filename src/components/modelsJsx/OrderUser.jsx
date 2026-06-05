@@ -45,30 +45,30 @@ function OrderUser({ orderCreated }) {
   const activeOrders = orders.filter((order) => order.isActive);
   const inactiveOrders = orders.filter((order) => !order.isActive);
 
-  const handleRepeatOrder = (order) => {
-    const newOrder = {
-      items: order.items.map((item) => ({
-        ...item,
-        quantity: item.quantity,
-      })),
-    };
+  // const handleRepeatOrder = (order) => {
+  //   const newOrder = {
+  //     items: order.items.map((item) => ({
+  //       ...item,
+  //       quantity: item.quantity,
+  //     })),
+  //   };
 
-    fetch(`${API_BASE_URL}/order/create-order`, {
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newOrder),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        refetchOrders();
-      })
-      .catch((error) => {
-        console.error("Ошибка отправки:", error);
-      });
-  };
+  //   fetch(`${API_BASE_URL}/order/create-order`, {
+  //     method: "POST",
+  //     credentials: 'include',
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(newOrder),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       refetchOrders();
+  //     })
+  //     .catch((error) => {
+  //       console.error("Ошибка отправки:", error);
+  //     });
+  // };
 
   const refetchOrders = () => {
       fetch(`${API_BASE_URL}/order/orders`, {
@@ -127,6 +127,7 @@ function OrderUser({ orderCreated }) {
                   Создано: 
                   {formatDate(order.createdAt)}
                 </p>
+                <p className="text-order">Сумма заказа: <strong>{order.totalSum}</strong></p>
                 <div
                   className={`details-container ${
                     expandedItems[order._id] ? "expanded" : "collapsed"
@@ -179,6 +180,7 @@ function OrderUser({ orderCreated }) {
                 <p className="text-order">
                 {formatDate(order.createdAt)}
                 </p>
+                <p className="text-order">Сумма заказа: <strong>{order.totalSum}</strong></p>
                 <div
                   className={`details-container ${
                     expandedItems[index] ? "expanded" : "collapsed"
@@ -207,12 +209,12 @@ function OrderUser({ orderCreated }) {
                 >
                   {expandedItems[index] ? "Скрыть" : "Развернуть"}
                 </button>
-                <button
+                {/* <button
                   className="carousel-btn"
                   onClick={() => handleRepeatOrder(order)}
                 >
                   Повторить
-                </button>
+                </button> */}
               </div>
             </div>
           ))

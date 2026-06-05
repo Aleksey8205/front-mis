@@ -10,11 +10,16 @@
     border: 1px solid #4CAF50;
     border-radius: 15px;
     padding: 15px;
+    width: 300px;
+    height: 430px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .prod-image {
     object-fit: contain;
     width: 250px;
+    height: 150px;
 }
 
 .button-add-clear {
@@ -38,6 +43,7 @@
     text-transform: uppercase;
     font-family: opensansBold;
     color: #29317e;
+    margin: 0;
 }
 
 .prod-list {
@@ -67,27 +73,26 @@
 }
 
 .submit-btn {
-    background-color: #3a3939;
-    box-shadow: 10px 5px 5px #666;
     background-color: #4CAF50;
     transform: scale(0.95);
-    padding: 10px 24px;
+
     transition: all 0.3s ease;
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     border-radius: 4px;
+    padding: 10px 10px;
     border: none;
     color: rgb(255, 255, 255);
     font-size: 16px;
     line-height: normal;
     font-weight: 700;
     text-transform: uppercase;
-    width: 100%;
-    margin-bottom: 5px;
+    width: 200px;
 }
 
 .red {
-    color: rgb(255, 0, 0);
+    background-color: red;
+    color: rgb(255, 255, 255);
     text-transform: lowercase;
     align-self: self-end;
     width: 100px;
@@ -100,11 +105,18 @@
     transform: scale(.95);
 }
 
+.totalSum_createBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
 .hidden {
     display: none;
 }
 
-.active {
+.active-box {
     font-family: openSansRegular;
     display: inline;
 }
@@ -121,7 +133,7 @@
     height: 30px;
     position: relative;
     left: 35px;
-    bottom: 30px;
+    bottom: 10px;
     background-color: rgb(207, 207, 207);
     border-radius: 15px;
     cursor: pointer;
@@ -149,6 +161,7 @@
     font-family: opensansRegular;
     font-size: 18px;
     margin: 0;
+    margin-bottom: 5px;
     color: #002472;
 }
 
@@ -185,5 +198,39 @@
 .info-manage {
     display: inline-flex;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    gap: 10px;
+}
+
+.textProd-order {
+    margin: 0;
+    font-family: openSansRegular;
+}
+
+.price {
+    text-align: right;
+    font-size: 24px;
+}
+
+.decription-text {
+ width: 100%;
+}
+
+.btn-auth {
+ width: 150px;
+}
+
+.dopInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: openSansRegular;
+}
+
+.input-dopInfo {
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #e2e2e2;
+    font-family: openSansRegular;
+    outline: none;
 }

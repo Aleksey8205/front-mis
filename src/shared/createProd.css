@@ -1,0 +1,81 @@
+.form-create-position {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-create-prod {
+    padding: 30px;
+}
+
+
+.column-form-create-prod {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.input-class {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px; 
+    align-items: center; 
+    margin-bottom: 15px; 
+}
+
+.text-prod-create {
+    display: block;
+    margin: 0;
+    font-size: 0.95rem;
+    color: #000000;
+}
+
+.input-prod-desc {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+
+.input-prod-desc:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+
+#price {
+    -moz-appearance: textfield;
+}
+
+#price::-webkit-outer-spin-button,
+#price::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.box-btn {
+    text-align: center;
+}
+
+.textarea-class {
+    text-align: center;
+
+}
+
+.textarea-create-prod {
+    width: 100%;
+}
+
+.textarea-desc {
+    min-width: 250px;
+    max-width: 560px;
+    min-height: 50px;
+}

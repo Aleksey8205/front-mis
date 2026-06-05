@@ -17,6 +17,9 @@ const HeaderFunc = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const [orderActive, setOrderActive] = useState(null);
+  const [cartItems, setCartItems] = useState(
+    JSON.parse(localStorage.getItem("cartItems")) || []
+  );
 
   const authState = useSelector((state) => state.auth);
 
@@ -32,6 +35,17 @@ const HeaderFunc = () => {
         });
     }
   }, [authState]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      setCartItems(storedItems);
+
+    }, 10000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <>
@@ -101,6 +115,9 @@ const HeaderFunc = () => {
                 }
               >
                 Корзина
+                {cartItems !== null && cartItems.length > 0 && (
+                        <span className="order-count">{cartItems.length}</span>
+                      )}
               </Link>
             </li>
             <li className="item-list linked">

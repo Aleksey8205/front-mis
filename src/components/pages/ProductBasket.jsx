@@ -1,25 +1,44 @@
-import data from "./busket.json";
 import "../../shared/basketProd.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { X } from "lucide-react";
+import SignInModal from "./../modals/SignIn";
+import Preloader from "./../Preloader";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
-import SignInModal from "./../modals/SignIn";
 
 const ProductBasket = () => {
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
   );
+  const [products, setProducts] = useState([]);
   const [isProdOpen, setIsProdOpen] = useState(false);
   const [text, setText] = useState("");
   const [message, setMessage] = useState("");
   const [orderOk, setOrderOk] = useState(false);
   const [addElement, setAddElement] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [totalSum, setTotalSum] = useState(0);
+  const [phoneName, setPhoneName] = useState(false);
+  const [dopName, setDopName] = useState("");
+  const [dopPhone, setDopPhone] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageOK, setMessageOk] = useState("")
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/product/product`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length > 0) {
+          setProducts(data);
+        } else {
+        }
+      });
+  }, []);
 
   const modalOpen = () => {
     setIsProdOpen(true);
+    setPhoneName(false);
   };
 
   const onProdClose = () => {
@@ -32,11 +51,11 @@ const ProductBasket = () => {
 
   const addProd = (prod, quanty) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item._id === prod.id);
+      const existingItem = prevItems.find((item) => item._id === prod._id);
       let newItems;
       if (existingItem) {
         newItems = prevItems.map((item) =>
-          item._id === prod.id
+          item._id === prod._id
             ? { ...item, quantity: item.quantity + quanty }
             : item
         );
@@ -44,13 +63,13 @@ const ProductBasket = () => {
         newItems = [
           ...prevItems,
           {
-            _id: prod.id,
+            _id: prod._id,
             category: prod.category,
-            type: prod.type,
             title: prod.name,
             quantity: quanty,
             feed: prod.feed,
             unit: prod.unit,
+            price: prod.price,
           },
         ];
       }
@@ -61,7 +80,7 @@ const ProductBasket = () => {
 
   const clearProd = (prod, quanty) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item._id === prod.id);
+      const existingItem = prevItems.find((item) => item._id === prod._id);
 
       if (!existingItem) {
         setAddElement(false);
@@ -69,13 +88,13 @@ const ProductBasket = () => {
       }
 
       if (existingItem.quantity <= quanty) {
-        const newItems = prevItems.filter((item) => item._id !== prod.id);
+        const newItems = prevItems.filter((item) => item._id !== prod._id);
         saveToLocalStorage(newItems);
         return newItems;
       }
 
       const newItems = prevItems.map((item) =>
-        item._id === prod.id
+        item._id === prod._id
           ? { ...item, quantity: item.quantity - quanty }
           : item
       );
@@ -88,11 +107,13 @@ const ProductBasket = () => {
     return item ? item.quantity : "";
   };
 
-  const mapCart = cartItems.map((prod) => prod.quantity);
-  let sum = 0;
-  for (let num of mapCart) {
-    sum += num;
-  }
+  useEffect(() => {
+    const sum = cartItems.reduce((accumulator, currentItem) => {
+      return accumulator + currentItem.price * currentItem.quantity;
+    }, 0);
+
+    setTotalSum(sum);
+  }, [cartItems]);
 
   const createOrder = async (cartItems) => {
     const withoutId = cartItems.map(({ _id, ...rest }) => rest);
@@ -100,6 +121,7 @@ const ProductBasket = () => {
     const payload = {
       items: withoutId,
       text: text,
+      totalSum: totalSum,
     };
     try {
       const response = await fetch(`${API_BASE_URL}/order/create-order`, {
@@ -127,13 +149,60 @@ const ProductBasket = () => {
     }
   };
 
+  const createOrderDopNamePhone = async (cartItems) => {
+    setErrorMessage("");
+    if (!dopName.trim() || !dopPhone.trim()) {
+      setErrorMessage("Пожалуйста, заполните все поля!");
+      return;
+    }
+    const withoutId = cartItems.map(({ _id, ...rest }) => rest);
+
+    const payload = {
+      items: withoutId,
+      text: text,
+      totalSum: totalSum,
+      dopName: dopName,
+      dopPhone: dopPhone,
+    };
+    try {
+      const response = await fetch(`${API_BASE_URL}/order/create-no-auth`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setMessage(errorData.message);
+      }
+      if (response.ok) {
+        const data = await response.json();
+        setCartItems([]);
+        localStorage.removeItem("cartItems");
+        setOrderOk(true);
+        setText("");
+        setAddElement(false);
+        setMessageOk(data.orderNumber)
+      }
+    } catch (error) {
+      setMessage("Ошибка на стороне сервера, закажите по телефону");
+      console.error("Ошибка при изменении статуса заказа:", err.message);
+    }
+  };
+
+  if (products.length == 0) {
+    return Preloader();
+  }
+
   return (
     <>
       <div className="container">
-        <h1 className="caption"></h1>
-        {mapCart.length > 0 ? (
+        <h1 className="caption">Продукция</h1>
+        {cartItems.length > 0 ? (
           <button className="carousel-btn" onClick={(e) => modalOpen()}>
-            Корзина: {sum}
+            Корзина: {cartItems.length}
           </button>
         ) : (
           <button className="carousel-btn" onClick={(e) => modalOpen()}>
@@ -141,19 +210,17 @@ const ProductBasket = () => {
           </button>
         )}
         <div className="product-cards">
-          {data.products.map((prod) => (
-            <div className="product-item" key={prod.id}>
+          {products.map((prod) => (
+            <div className="product-item" key={prod._id}>
               <img
                 className="prod-image"
                 src={prod.coverImage || ""}
                 alt={prod.name}
               />
-              <h2 className="caption-benefits">{prod.category}</h2>
-              <p className="textProd-name">{prod.name}</p>
-              <div className="prod-info">
-                <p className="textProd-order">{prod.type}</p>
-                <p className="textProd-order">{prod.feed}</p>
-              </div>
+              <h2 className="caption-benefits">{prod.name}</h2>
+              <h3 className="textProd-order">{prod.feed}</h3>
+              <p className="decription-text">{prod.description}</p>
+              <p className="textProd-order price">{prod.price} ₽</p>
               <div className="button-add-clear">
                 {prod.category === "Цыплята" ? (
                   addElement ? (
@@ -172,7 +239,7 @@ const ProductBasket = () => {
                           + 1
                         </button>
                       </div>
-                      <p className="count-color">{getCount(prod.id)}</p>
+                      <p className="count-color">{getCount(prod._id)}</p>
                       <div className="style-inc-prod">
                         <button
                           className="inc-prod"
@@ -198,7 +265,7 @@ const ProductBasket = () => {
                         addProd(prod, 1);
                       }}
                     >
-                      Добавить в корзину {getCount(prod.id)}
+                      Добавить в корзину {getCount(prod._id)}
                     </button>
                   )
                 ) : (
@@ -208,11 +275,12 @@ const ProductBasket = () => {
                       addProd(prod, 1);
                     }}
                   >
-                    Добавить в корзину {getCount(prod.id)}
+                    Добавить в корзину {getCount(prod._id)}
+                    {getCount(prod._id) > 0 && ` ${prod.unit}`}
                   </button>
                 )}
 
-                {getCount(prod.id) > 0 && (
+                {getCount(prod._id) > 0 && (
                   <>
                     {prod.category === "Цыплята" ? (
                       addElement && <p className="text-order"></p>
@@ -241,7 +309,7 @@ const ProductBasket = () => {
               : "modal-basket"
           }
         >
-          {mapCart.length == 0 && !orderOk ? (
+          {cartItems.length == 0 && !orderOk ? (
             <div className="success-order">
               <p className="text">Вы ничего не положили</p>
               <button
@@ -267,14 +335,16 @@ const ProductBasket = () => {
                   <div className="item-box">
                     {cartItems.map((prod, id) => (
                       <div className="item-list-prod" key={id}>
-                        <p className="text-order">Позиция:</p>
                         <div className="items-desc-prod">
                           <p className="text-order">{prod.category}:</p>
                           <p className="text-order">{prod.title}</p>
-                          <p className="text-order">"{prod.feed}"</p>
+                          <p className="text-order">{prod.feed}</p>
                           <p className="text-order">Колличество: </p>
                           <p className="text-order">{prod.quantity}</p>
                           <p className="text-order">{prod.unit}</p>
+                          <p className="text-order">
+                            /{prod.price * prod.quantity} ₽
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -286,12 +356,81 @@ const ProductBasket = () => {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                   />
-                  <button
-                    className="submit-btn"
-                    onClick={(e) => createOrder(cartItems)}
-                  >
-                    Оформить заказ
-                  </button>
+                  <div className="totalSum_createBtn">
+                    <h3 className="caption-basket">Сумма: {totalSum} ₽</h3>
+                    {!phoneName ? (
+                      <button
+                        className="submit-btn"
+                        onClick={(e) => createOrder(cartItems)}
+                      >
+                        Оформить заказ
+                      </button>
+                    ) : (
+                      <button
+                        className="submit-btn"
+                        onClick={(e) => createOrderDopNamePhone(cartItems)}
+                      >
+                        Оформить заказ
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="info-manage">
+                    <p className={message ? "active-box" : "hidden"}>
+                      {message}
+                    </p>
+                    <button
+                      className={message ? "submit-btn btn-auth" : "hidden"}
+                      onClick={() => setLoginModalOpen(true)}
+                    >
+                      Войти
+                    </button>
+                    <button
+                      className={message ? "submit-btn btn-auth" : "hidden"}
+                      onClick={() => {
+                        setPhoneName(true);
+                        setMessage("");
+                      }}
+                    >
+                      Войти по тел.
+                    </button>
+                  </div>
+                  <div className="error-box">
+                    <p
+                      className={errorMessage ? "active text-order" : "hidden"}
+                    >
+                      {errorMessage}
+                    </p>
+                  </div>
+                  {phoneName === true && (
+                    <div className="dopInfo">
+                      <label htmlFor="dopName">
+                        <p className="text-order">Имя: </p>
+                      </label>
+                      <input
+                        type="text"
+                        className="input-dopInfo"
+                        id="dopName"
+                        value={dopName}
+                        required={true}
+                        placeholder="Иван Иванов"
+                        onChange={(e) => setDopName(e.target.value)}
+                      />
+
+                      <label htmlFor="dopPhone">
+                        <p className="text-order">Телефон:</p>
+                      </label>
+                      <input
+                        type="text"
+                        className="input-dopInfo"
+                        placeholder="8-999-999-01-01"
+                        id="dopPhone"
+                        value={dopPhone}
+                        required={true}
+                        onChange={(e) => setDopPhone(e.target.value)}
+                      />
+                    </div>
+                  )}
                   <button
                     className="submit-btn red"
                     onClick={(e) => {
@@ -303,19 +442,14 @@ const ProductBasket = () => {
                   >
                     очистить
                   </button>
-                  <div className="info-manage">
-                    <p className={message ? "active" : "hidden"}>{message}</p>
-                    <button
-                      className={message ? "carousel-btn" : "hidden"}
-                      onClick={() => setLoginModalOpen(true)}
-                    >
-                      Войти
-                    </button>
-                  </div>
                 </div>
               ) : (
                 <div className="success-order">
                   <p className="text">Ваш заказ успешно отправлен!</p>
+                  <p className="text">
+                    Ваш заказ сформирован №<strong>{messageOK}</strong>. <br /> Вы можете получить его по адресу М.
+                    О. пос. МИС ул. Академика горячкина д. 83
+                  </p>
                   <button
                     className="carousel-btn"
                     onClick={() => {

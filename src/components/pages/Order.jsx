@@ -17,6 +17,7 @@ function Order() {
   const [searchOrder, setSearchOrder] = useState();
   const [searching, setIsSearching] = useState(false);
 
+ 
   useEffect(() => {
     async function loadAllData() {
       try {
@@ -24,16 +25,22 @@ function Order() {
           credentials: "include",
         });
         const ordersData = await ordersResponse.json();
-
+  
         const uniqueUserIds = Array.from(
           new Set(ordersData.map((order) => order.user))
         );
-
-        const usersPromises = uniqueUserIds.map(async (userId) => {
+        const validUserIds = uniqueUserIds.filter((userId) => userId);
+  
+        const usersPromises = validUserIds.map(async (userId) => {
           const userResponse = await fetch(`${API_BASE_URL}/order/${userId}`, {
             method: "GET",
             credentials: "include",
           });
+  
+          if (!userResponse.ok) {
+            return null;
+          }
+  
           const userData = await userResponse.json();
           return {
             id: userId,
@@ -42,14 +49,16 @@ function Order() {
             email: userData.email || "",
           };
         });
-
+  
         const allUsersData = await Promise.all(usersPromises);
-
+  
+        const filteredUsersData = allUsersData.filter((user) => user !== null);
+  
         const usersInfo = {};
-        allUsersData.forEach((user) => {
+        filteredUsersData.forEach((user) => {
           usersInfo[user.id] = user;
         });
-
+  
         setOrders(ordersData);
         setUniqueUserIds(uniqueUserIds);
         setUsersInfo(usersInfo);
@@ -57,7 +66,7 @@ function Order() {
         console.error("Ошибка при загрузке данных:", error);
       }
     }
-
+  
     loadAllData();
   }, []);
 
@@ -254,6 +263,9 @@ function Order() {
                         </p>
                         <p className="text-order">
                           Телефон: {usersInfo[order.user]?.phoneNumber || ""}
+                        </p>
+                        <p className="text-order">
+                          Сумма заказа: <strong>{order.totalSum} ₽</strong>
                         </p>
                       </>
                     ) : (
