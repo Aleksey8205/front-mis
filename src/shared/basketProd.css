@@ -31,7 +31,7 @@
 .modal-basket {
     width: 550px;
     background-color: white;
-    height: 650px;
+    height: 550px;
     padding: 15px;
     border-radius: 15px;
     position: relative;
@@ -131,12 +131,18 @@
 .x-icon-basket {
     width: 30px;
     height: 30px;
-    position: relative;
-    left: 35px;
-    bottom: 10px;
     background-color: rgb(207, 207, 207);
     border-radius: 15px;
+    text-align: center;
     cursor: pointer;
+    align-self: flex-end;
+    font-size: 16px;
+    margin: 0;
+}
+
+.x-i {
+    width: 28px;
+    height: 28px;
 }
 
 .add-prod {
@@ -233,4 +239,22 @@
     background-color: #e2e2e2;
     font-family: openSansRegular;
     outline: none;
+}
+
+@media (max-width: 580px) {
+    .modal-basket {
+        width: 90vw;
+        height: 90vh;
+    }
+    
+    .dopInfo {
+        flex-direction: column;
+    }
+
+    .input-dop-info {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 7px;
+    }
 }

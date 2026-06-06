@@ -325,13 +325,16 @@ const ProductBasket = () => {
             <>
               {!orderOk ? (
                 <div className="prod-list">
-                  <h2 className="caption-basket">
-                    Проверьте заказ перед отправкой
-                    <X
-                      className="x-icon-basket"
+                  <p className="x-icon-basket">
+                  <X
+                  className="x-i"
                       onClick={(e) => setIsProdOpen(false)}
                     />
+                    </p>
+                  <h2 className="caption-basket">
+                    Проверьте заказ перед отправкой
                   </h2>
+                  
                   <div className="item-box">
                     {cartItems.map((prod, id) => (
                       <div className="item-list-prod" key={id}>
@@ -404,6 +407,7 @@ const ProductBasket = () => {
                   </div>
                   {phoneName === true && (
                     <div className="dopInfo">
+                      <div className="input-dop-info">
                       <label htmlFor="dopName">
                         <p className="text-order">Имя: </p>
                       </label>
@@ -416,7 +420,9 @@ const ProductBasket = () => {
                         placeholder="Иван Иванов"
                         onChange={(e) => setDopName(e.target.value)}
                       />
+                      </div>
 
+                      <div className="input-dop-info">
                       <label htmlFor="dopPhone">
                         <p className="text-order">Телефон:</p>
                       </label>
@@ -429,6 +435,7 @@ const ProductBasket = () => {
                         required={true}
                         onChange={(e) => setDopPhone(e.target.value)}
                       />
+                      </div>
                     </div>
                   )}
                   <button
