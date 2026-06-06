@@ -268,22 +268,6 @@
     }
 
     .product-item {
-        height: 450px;
-    }
-
-
-
-    .decription-text::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        
-        height: 40px; 
-    
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
-    
-        pointer-events: none; 
+        height: 465px;
     }
 }
