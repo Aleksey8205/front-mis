@@ -13,7 +13,7 @@
     width: 300px;
     height: 500px;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .prod-image {
@@ -153,7 +153,7 @@
     padding: 5px;
     transform: scale(0.95);
     border-radius: 15px;
-    
+
 }
 
 .prod-info {
@@ -219,11 +219,13 @@
 }
 
 .decription-text {
- width: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: openSansRegular;
 }
 
 .btn-auth {
- width: 150px;
+    width: 150px;
 }
 
 .dopInfo {
@@ -246,7 +248,7 @@
         width: 90vw;
         height: 90vh;
     }
-    
+
     .dopInfo {
         flex-direction: column;
     }
@@ -256,5 +258,9 @@
         gap: 10px;
         align-items: center;
         margin-top: 7px;
+    }
+
+    .product-item {
+        height: 300px;
     }
 }
