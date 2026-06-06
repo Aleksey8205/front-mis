@@ -263,4 +263,28 @@
     .product-item {
         height: 550px;
     }
+
+    .decription-text {
+        height: 80px;
+        display: -webkit-box; /* Для старых браузеров */
+        -webkit-line-clamp: 3; /* Показываем только 3 строки текста */
+        -webkit-box-orient: vertical; /* Ориентация коробочной модели */
+        overflow: hidden; /* Прячем текст, выходящий за рамки */
+        
+        position: relative;
+    }
+
+    .decription-text::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        
+        height: 40px; 
+    
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
+    
+        pointer-events: none; 
+    }
 }
