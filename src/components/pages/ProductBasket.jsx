@@ -1,13 +1,18 @@
 import "../../shared/basketProd.css";
 import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
-import { X } from "lucide-react";
+import { X, Pencil } from "lucide-react";
 import SignInModal from "./../modals/SignIn";
 import Preloader from "./../Preloader";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
+import PatchProd from './../modals/PatchProd';
+import { useSelector } from "react-redux";
 
 const ProductBasket = () => {
+
+  const user = useSelector((state) => state.auth)
+
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
   );
@@ -23,7 +28,12 @@ const ProductBasket = () => {
   const [dopName, setDopName] = useState("");
   const [dopPhone, setDopPhone] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [messageOK, setMessageOk] = useState("")
+  const [messageOK, setMessageOk] = useState("");
+
+  const [prod, setProd] = useState("");
+  const [patchProdOpen, setPatchProdOpen] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/product/product`)
@@ -31,10 +41,9 @@ const ProductBasket = () => {
       .then((data) => {
         if (data.length > 0) {
           setProducts(data);
-        } else {
         }
       });
-  }, []);
+  }, [updateSuccess, patchProdOpen]);
 
   const modalOpen = () => {
     setIsProdOpen(true);
@@ -137,11 +146,13 @@ const ProductBasket = () => {
         setMessage(errorData.message);
       }
       if (response.ok) {
+        const data = await response.json();
         setCartItems([]);
         localStorage.removeItem("cartItems");
         setOrderOk(true);
         setText("");
         setAddElement(false);
+        setMessageOk(data.orderNumber)
       }
     } catch (error) {
       setMessage("Ошибка на стороне сервера, закажите по телефону");
@@ -196,6 +207,11 @@ const ProductBasket = () => {
     return Preloader();
   }
 
+  const setIdProd = (id) => {
+    setProd(id)
+    setPatchProdOpen(true)
+  }
+
   return (
     <>
       <div className="container">
@@ -212,6 +228,13 @@ const ProductBasket = () => {
         <div className="product-cards">
           {products.map((prod) => (
             <div className="product-item" key={prod._id}>
+              {user.user?.isAdmin === true ? (
+            <Pencil className="patch-prod" 
+               onClick={() => setIdProd(prod._id)}
+            />
+              ): (
+                <p></p>
+              )}
               <img
                 className="prod-image"
                 src={prod.coverImage || ""}
@@ -296,6 +319,7 @@ const ProductBasket = () => {
                 )}
               </div>
             </div>
+            
           ))}
         </div>
         <ReactModal
@@ -479,6 +503,16 @@ const ProductBasket = () => {
         isOpen={loginModalOpen}
         onClose={() => setLoginModalOpen(false)}
       />
+      {user.user?.isAdmin && (
+        <PatchProd 
+      isOpenProd={patchProdOpen}
+      onClose={() => setPatchProdOpen(false)}
+      id={prod} 
+      onSuccess={() => setUpdateSuccess(true)}
+      />
+      )}
+      
+
     </>
   );
 };

@@ -5,6 +5,8 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 90vh;
+    overflow: auto;
 }
 
 .form-create-prod {
@@ -28,6 +30,7 @@
 }
 
 .text-prod-create {
+    font-family: openSansRegular;
     display: block;
     margin: 0;
     font-size: 0.95rem;

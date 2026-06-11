@@ -12,7 +12,7 @@
     padding: 15px;
     width: 300px;
     display: grid;
-    grid-template-rows: 150px 60px 30px 100px 30px 80px;
+    grid-template-rows: 15px 150px 60px 30px 100px 30px 80px;
 }
 
 .prod-image {
@@ -135,6 +135,7 @@
     text-align: center;
     cursor: pointer;
     align-self: flex-end;
+    justify-self: self-end;
     font-size: 16px;
     margin: 0;
 }
@@ -247,6 +248,10 @@
     background-color: #e2e2e2;
     font-family: openSansRegular;
     outline: none;
+}
+
+.patch-prod {
+    cursor: pointer;
 }
 
 @media (max-width: 580px) {

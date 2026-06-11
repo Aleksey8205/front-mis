@@ -41,7 +41,7 @@ const HeaderFunc = () => {
       const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
       setCartItems(storedItems);
 
-    }, 10000);
+    }, 5000);
     return () => {
       clearInterval(intervalId);
     };
